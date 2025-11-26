@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""3-rectangle.py: Defines a Rectangle and string representations using '#'."""
+"""3-rectangle.py: Defines a Rectangle and using '#'."""
 
 
 class Rectangle:
