@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """3-rectangle.py: Defines a Rectangle and string representations using '#'."""
 
+
 class Rectangle:
     """Represents a rectangle."""
 
@@ -57,4 +58,4 @@ class Rectangle:
 
     def __repr__(self):
         """Return a string that can recreate the object."""
-        return f"<{self.__class__.__name__} object at {hex(id(self))}>"
+        return f"<3-rectangle.{self.__class__.__name__} object at {hex(id(self))}>"
