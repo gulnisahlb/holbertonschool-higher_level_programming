@@ -57,8 +57,5 @@ class Rectangle:
         return "\n".join(lines)
 
     def __repr__(self):
-    """Return a string for recreating the object for testing."""
-    return (
-        f"<3-rectangle.{self.__class__.__name__} "
-        f"object at {hex(id(self))}>"
-    )
+        """Return a string."""
+        return f"<3-rectangle.{self.__class__.__name__} object at {hex(id(self))}>"
