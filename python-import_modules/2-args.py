@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-import sys
-if __name__ == "__main__":
-    args = sys.argv[1:]  # Skript adını çıxmaq üçün [1:]
-    count = len(args)
+from sys import argv
 
-    if count == 0:
+
+if __name__ == "__main__":
+    argc = len(argv) - 1
+    if argc == 0:
         print("0 arguments.")
     else:
-        print("{} argument{}:".format(count, "" if
+        print("{} argument{}:".format(argc, "" if argc == 1 else "s"))
+        for i in range(1, len(argv)):
+            print("{}: {}".format(i, argv[i]))
