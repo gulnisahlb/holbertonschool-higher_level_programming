@@ -3,25 +3,26 @@
 
 
 class BaseGeometry:
-    """BaseGeometry class."""
+    """BaseGeometry class"""
 
     def area(self):
-        """Raises exception because area is not implemented."""
+        """Raises an Exception because area is not implemented."""
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
         """
-        Validate a value.
+        Validates a value
 
         Args:
-            name (str): attribute name (always string as stated)
-            value (int): must be > 0
+            name (str): name (always string per task)
+            value (int): must be integer > 0
 
         Raises:
-            TypeError: if value is not int
+            TypeError: if value is not an int OR is boolean
             ValueError: if value <= 0
         """
-        if type(value) is not int:
+        # bool int-in subclassıdır → AYRI YOXLANMALIDIR!!!
+        if type(value) is bool or type(value) is not int:
             raise TypeError(f"{name} must be an integer")
 
         if value <= 0:
