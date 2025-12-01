@@ -1,35 +1,41 @@
-BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> bg = BaseGeometry()
 
-# Object yaradılır
-bg = BaseGeometry()
+>>> bg.integer_validator("my_int", 12)
+>>> bg.integer_validator("width", 89)
 
-# area() test
-try:
-    bg.area()
-except Exception as e:
-    print("[{}] {}".format(e.__class__.__name__, e))
+>>> bg.integer_validator("name", "John")
+Traceback (most recent call last):
+TypeError: name must be an integer
 
-# integer_validator() testləri
+>>> bg.integer_validator("age", 0)
+Traceback (most recent call last):
+ValueError: age must be greater than 0
 
-# ✔ keçməli
-bg.integer_validator("age", 1)
+>>> bg.integer_validator("distance", -4)
+Traceback (most recent call last):
+ValueError: distance must be greater than 0
 
-# ❗ ValueError
-try:
-    bg.integer_validator("age", 0)
-except Exception as e:
-    print("[{}] {}".format(e.__class__.__name__, e))
+>>> bg.integer_validator("age", "4")
+Traceback (most recent call last):
+TypeError: age must be an integer
 
-try:
-    bg.integer_validator("age", -4)
-except Exception as e:
-    print("[{}] {}".format(e.__class__.__name__, e))
+>>> bg.integer_validator("age", (4,))
+Traceback (most recent call last):
+TypeError: age must be an integer
 
-# ❗ TypeError – int deyil
-values = ["4", (4,), [3], True, {3, 4}, None]
+>>> bg.integer_validator("age", [3])
+Traceback (most recent call last):
+TypeError: age must be an integer
 
-for v in values:
-    try:
-        bg.integer_validator("age", v)
-    except Exception as e:
-        print("[{}] {}".format(e.__class__.__name__, e))
+>>> bg.integer_validator("age", True)
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", {3, 4})
+Traceback (most recent call last):
+TypeError: age must be an integer
+
+>>> bg.integer_validator("age", None)
+Traceback (most recent call last):
+TypeError: age must be an integer
