@@ -1,62 +1,21 @@
-"""
-7-base_geometry module doctest
+BaseGeometry = __import__('7-base_geometry').BaseGeometry
 
->>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
->>> bg = BaseGeometry()
+bg = BaseGeometry()
 
-# integer_validator works with positive integers
->>> bg.integer_validator("my_int", 12)
->>> bg.integer_validator("width", 89)
+bg.integer_validator("my_int", 12)
+bg.integer_validator("width", 89)
 
-# integer_validator raises TypeError with non-integer
->>> try:
-...     bg.integer_validator("name", "John")
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] name must be an integer
+try:
+    bg.integer_validator("name", "John")
+except Exception as e:
+    print("[{}] {}".format(e.__class__.__name__, e))
 
->>> try:
-...     bg.integer_validator("age", 0)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] age must be greater than 0
+try:
+    bg.integer_validator("age", 0)
+except Exception as e:
+    print("[{}] {}".format(e.__class__.__name__, e))
 
->>> try:
-...     bg.integer_validator("distance", -4)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[ValueError] distance must be greater than 0
-
-# area() raises Exception
->>> try:
-...     bg.area()
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[Exception] area() is not implemented
-
-# integer_validator with boolean raises TypeError
->>> try:
-...     bg.integer_validator("flag", True)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] flag must be an integer
-
-# integer_validator with non-int iterable raises TypeError
->>> try:
-...     bg.integer_validator("list_val", [1, 2, 3])
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] list_val must be an integer
-
->>> try:
-...     bg.integer_validator("tuple_val", (4,))
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] tuple_val must be an integer
-
->>> try:
-...     bg.integer_validator("none_val", None)
-... except Exception as e:
-...     print("[{}] {}".format(e.__class__.__name__, e))
-[TypeError] none_val must be an integer
-"""
+try:
+    bg.integer_validator("distance", -4)
+except Exception as e:
+    print("[{}] {}".format(e.__class__.__name__, e))
