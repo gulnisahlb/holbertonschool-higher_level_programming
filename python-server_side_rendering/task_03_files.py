@@ -7,16 +7,27 @@ app = Flask(__name__)
 
 
 def read_json_file(file_path):
+    """Read product data from JSON file (supports list or {items: []})"""
     try:
         with open(file_path, "r", encoding="utf-8") as json_file:
             data = json.load(json_file)
-            return data.get("items", [])
+
+            # JSON is a list
+            if isinstance(data, list):
+                return data
+
+            # JSON is an object with "items"
+            if isinstance(data, dict) and "items" in data:
+                return data["items"]
+
+            return []
     except Exception as error:
         print(f"Error reading JSON: {error}")
         return []
 
 
 def read_csv_file(file_path):
+    """Read product data from CSV file"""
     products_list = []
 
     try:
@@ -39,6 +50,7 @@ def show_products():
     error_message = None
     product_list = []
 
+    # Determine source type
     if source_type == "json":
         product_list = read_json_file("products.json")
     elif source_type == "csv":
@@ -46,12 +58,13 @@ def show_products():
     else:
         error_message = "Wrong source"
 
-    if product_id:
+    # Filter by ID
+    if product_id and not error_message:
         try:
             product_id = int(product_id)
             filtered_products = [
                 product for product in product_list
-                if product["id"] == product_id
+                if int(product["id"]) == product_id
             ]
 
             if not filtered_products:
