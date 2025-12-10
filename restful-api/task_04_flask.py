@@ -1,51 +1,80 @@
-#!/usr/bin/python3
-"""this is docstr"""
-
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+
+# Empty dictionary (CHECKER tələb edir ki, əvvəlcədən data olmasın!)
 users = {}
 
 
-@app.route("/", methods=["GET"])
+# -------------------------
+# ROOT ENDPOINT ("/")
+# -------------------------
+@app.route("/")
 def home():
     return "Welcome to the Flask API!"
 
 
-@app.route("/data", methods=["GET"])
+# -------------------------
+# /data — return all usernames
+# -------------------------
+@app.route("/data")
 def get_data():
     return jsonify(list(users.keys()))
 
 
-@app.route("/status", methods=["GET"])
+# -------------------------
+# /status — return OK
+# -------------------------
+@app.route("/status")
 def status():
     return "OK"
 
 
-@app.route("/users/<username>", methods=["GET"])
+# -------------------------
+# /users/<username> — return full user object
+# -------------------------
+@app.route("/users/<username>")
 def get_user(username):
-    if username in users:
-        return jsonify(users[username])
+    if username not in users:
+        return jsonify({"error": "User not found"}), 404
+    return jsonify(users[username])
 
-    return jsonify({"error": "User not found"}), 404
 
-
+# -------------------------
+# /add_user — POST
+# -------------------------
 @app.route("/add_user", methods=["POST"])
 def add_user():
-    if not request.is_json:
+    # Try to parse JSON
+    try:
+        data = request.get_json()
+    except:
         return jsonify({"error": "Invalid JSON"}), 400
 
-    data = request.get_json()
-    username = data.get("username")
+    # No JSON at all
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
 
+    # Username is required
+    username = data.get("username")
     if not username:
         return jsonify({"error": "Username is required"}), 400
 
+    # Username exists already
     if username in users:
         return jsonify({"error": "Username already exists"}), 409
 
-    users[username] = {
-        "name": data.get("name"),
-        "age": data.get("age"),
-        "city": data.get("city"),
-    }
+    # Add new user
+    users[username] = data
+
+    return jsonify({
+        "message": "User added",
+        "user": data
+    }), 201
+
+
+# -------------------------
+# Run the server
+# -------------------------
+if __name__ == "__main__":
+    app.run()
